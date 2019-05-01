@@ -27,8 +27,7 @@ print(data1)
 data1 %>%
   group_by(species) %>%
   summarize(mean = mean(height, na.rm = TRUE),
-            standar = sd(height, na.rm = TRUE)
-            )
+            se = sd(height, na.rm = TRUE)/sqrt(32))
 
 #(for 7) tibble w/ all species + height (excluding NAs)
 data2 <- sampledata %>%
