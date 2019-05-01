@@ -9,10 +9,26 @@
 
 library(tidyverse)
 
-sampledata <- read_csv("sample-data.csv")
+#6 tibble - species A & B + height
+sampledata <- read_csv("sample-data.csv") %>%
+  select(species, height) %>%
+  filter(species != "C")
 
-#6 mean & SE of height for species A & B - tibble
+sampledata
 
-as_tibble(sampledata)
+#tibble excluding NAs
+data <- sampledata %>%
+  filter(complete.cases(.))
 
-data <- filter(sampledata, species ! = "C")
+data
+
+#tibble w/ mean & SE
+data %>%
+  group_by(species) %>%
+  summarize(mean = mean(height, na.rm = TRUE),
+            standar = sd(height, na.rm = TRUE)
+            )
+
+#7 histogram of heights w/ facets for species x3
+ggplot(sampledata) +
+  geom_histogram(aes(height))
